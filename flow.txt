@@ -1,0 +1,64 @@
+1. create a folder .github
+2. create a folder workflows inside .github
+3. create a file ci.yaml inside workflows
+4. write the code for ci.yaml
+
+example 
+
+name: CI Workflow                                      # name of the workflow                
+
+on:                                                    # when the workflow should run
+  push:                                                # when the code is pushed to the main branch
+    branches:
+      - main
+  pull_request:                                        # when the code is pulled to the main branch
+    branches:
+      - main
+
+jobs:                                                 # list of jobs to run
+  test:                                               # name of the job
+    runs-on: ubuntu-latest                            # operating system to run the job on
+
+    steps:                                            # list of steps to run
+    - name: Checkout code                             # name of the step
+      uses: actions/checkout@v2                     # uses the checkout action
+
+    - name: Set up Python                             # name of the step
+      uses: actions/setup-python@v2                 # uses the setup-python action
+      with:
+        python-version: '3.9'                         # python version to use
+
+    - name: Install dependencies                      # name of the step
+      run: |
+        python -m pip install --upgrade pip
+        pip install pytest streamlit
+
+    - name: Run tests                                 # name of the step
+      run: |
+        pytest _test.py                               # run tests   
+
+# conclusion 
+
+name work flow 
+write when to run 
+write jobs 
+    write the os where the pipeline will run 
+    write the steps to run 
+        name and step 
+        name : checkout code   
+        uses : actions/checkout@v2  ( default checkout action if using github actions )
+
+        name : set up python           ( if using python )
+        uses : action/setup-python@v2 
+        with : 
+            python-version : '3.9' 
+
+        name : install dependencies 
+        run : |
+            python -m pip install --upgrade pip
+            pip install pytest streamlit 
+
+        name : run tests 
+        run : |
+            pytest _test.py 
+        
